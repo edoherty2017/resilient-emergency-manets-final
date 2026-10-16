@@ -44,6 +44,25 @@ dwell; and among six origin-decoded foreign frames, **zero were direct reception
 arrived relayed, attributing its RSSI to an unknown last hop. This result motivated the
 controlled-beacon protocol subsequently pre-registered here.
 
+## Related work
+
+Bianco, Mejia-Aguilar and Marrocco measured ground-to-UAV LoRa path loss over mountainous
+hills in South Tyrol (EuCAP 2023, doi:10.23919/EuCAP57121.2023.10132979). Even with the
+transmitter and receiver in constant line of sight, measured path loss exceeded the
+free-space single-ray prediction at both sites — fitting n = 3.73 at Val di Mazia and
+n = 2.34 at Corvara against n = 2 for free space — which they attribute to hill morphology
+and sparse obstacles rather than to the snow. They note that their experimental fits
+"incorporate effects that, in principle, could be taken into account by modelling the
+environment, computing corrective factors, and adding them to the FS model," and then
+deliberately take the empirical route instead, offering the fits as a directly usable
+first estimate of radio range.
+
+This project takes the other route: a Longley–Rice terrain-diffraction layer over real
+USGS 3DEP elevation data, computing per-link clearance and diffraction loss instead of
+fitting a log-distance exponent per site. The two approaches are complementary — an
+empirical fit generalises poorly to a new valley, while a terrain model carries no
+vegetation term and so cannot be cleanly tested below the treeline.
+
 ## Reproducibility
 
 Two independently written discrete-event engines — a Python/SimPy reference and a Rust
