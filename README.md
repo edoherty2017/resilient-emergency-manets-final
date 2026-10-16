@@ -1,15 +1,78 @@
 # Resilient Emergency MANETs for Wilderness Safety
 
-Main research/orchestration repo for Summer 2026 directed study:
-- planning + methodology
-- data acquisition schema + QA
-- AIRMap calibration + validation
-- analysis outputs and final report artifacts
+Terrain-aware planning and year-scale reliability simulation for a solar-powered
+LoRa/Meshtastic mesh intended for wilderness search and rescue. Master's directed study,
+Northeastern University, Summer 2026 (CS 5976), advised by Prof. Stefano Basagni and
+Prof. Guevara Noubir.
 
-Current evidence status: this is a research prototype, not a field-validated or
-legally cleared emergency network. Start with the dated
-[audit and correction ledger](docs/audit-correction-ledger-2026-07-13.md) before
-citing any generated result.
+**Full report:** [`reports/directed-study-report-2026-08-03.md`](reports/directed-study-report-2026-08-03.md)
+([PDF](reports/directed-study-report-2026-08-03.pdf))
+
+---
+
+## Results
+
+**1. Survivability is governed by duty-cycling policy, not routing choice.**
+Across five materially different always-on routing modes — flooding, minimum-hop, ETX,
+energy-aware and load-balanced — annual energy-depletion events vary by **less than 0.3%**
+(29,164–29,234). Changing the duty policy moves them **5.5–24×** (down to 1,217–5,311) and
+fleet availability from 54% to 90–96%, at a quantified cost in delivery ratio and SOS
+latency. Idle listening dominates the energy budget. A listen-current sweep locates the
+design threshold: **below roughly 10 mA idle receive current the trade-off disappears**
+(27 depletions/year, 99.8% availability). A ten-year ERA5 climate campaign confirms the
+advantage in every weather year 2016–2025 (15.4–26.5×, mean 20.7×).
+*Model-only, pending field calibration.*
+
+**2. Real-terrain modelling reversed the project's own coverage conclusions, by up to 62.3 dB.**
+Replacing free-space analysis with Longley–Rice ITM over USGS 3DEP elevation data flipped
+the link picture: relay-to-summit chords came out terrain-blocked (−132.2 dBm, below the
+assumed −131 dBm sensitivity), while valley crossings came out clear line-of-sight and
+roughly 55 dB stronger (−76.6 / −74.1 dBm). The blocker is diffraction over the convexity of
+the summit cone, with terrain rising up to 53 m above the direct ray. A raised mast, a lower
+relocation and a summit-sited node were each modelled and rejected. *Model-only.*
+
+**3. A pre-registered wake-up-radio hypothesis, refuted.**
+Both registered claims failed: always-on 2 mA-class silicon dominated every wake-receiver
+variant on every axis, including the physically unrealisable ideal one. At realistic
+sensitivity deltas, 40.1% of routing-eligible links cannot carry the wake chirp and a median
+of 89 of 457 sites lose every wake-feasible path to a gateway. Published as a negative result.
+
+**4. Opportunistic validation against a public mesh is infeasible — measured, not argued.**
+Field measurement put public-station transmit cadence at **0–4 packets per hour**, yielding
+~0.6 expected transmissions from the primary target across a 33-minute GPS-verified summit
+dwell; and among six origin-decoded foreign frames, **zero were direct receptions** — each
+arrived relayed, attributing its RSSI to an unknown last hop. This result motivated the
+controlled-beacon protocol subsequently pre-registered here.
+
+## Reproducibility
+
+Two independently written discrete-event engines — a Python/SimPy reference and a Rust
+performance engine — are cross-validated on a shared micro-scenario against pre-registered
+tolerance bands (max 0.0045 absolute PDR difference). Output is byte-reproducible: four
+independent runs produced identical 419,738-byte artifacts. The released campaign is
+9 policy modes × 5 seeds × 365 simulated days with hash-locked inputs.
+
+## How this repository handles evidence
+
+Claims are labelled by evidence class, and the labels are enforced rather than decorative:
+
+- [`docs/audit-correction-ledger-2026-07-13.md`](docs/audit-correction-ledger-2026-07-13.md) — dated defect ledger
+- [`docs/claims-source-audit-2026-07.md`](docs/claims-source-audit-2026-07.md) — sentence-level claims audit
+- [`WITHDRAWN-DO-NOT-CITE/`](WITHDRAWN-DO-NOT-CITE/) — superseded results, retained for provenance and excluded from citation
+- Prediction packs are SHA-256 frozen and registered before the data they concern is collected
+
+**Scope.** This is a research prototype: a planning and simulation study with a field
+acquisition system, not a field-validated or legally cleared emergency network. The
+controlled calibration dataset remains outstanding — the released dataset is labelled
+accordingly in its manifest — and the remaining step is specified in the report's future
+work.
+
+## Repository contents
+
+- Planning and methodology; data-acquisition schema and QA
+- AIRMap prediction pipeline, terrain layer and calibration tooling
+- Analysis outputs and final report artifacts
+- Companion runtimes: [`meshradio-head-runtime`](https://github.com/edoherty2017/meshradio-head-runtime), [`meshradio-node-runtime`](https://github.com/edoherty2017/meshradio-node-runtime)
 
 ## Architecture — class diagrams
 
