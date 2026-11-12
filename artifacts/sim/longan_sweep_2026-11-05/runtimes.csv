@@ -1,0 +1,13 @@
+run,relay_rx_ma,seed,wall_s
+ctl_rxma2_s43,2,43,832
+ctl_rxma2_s42,2,42,833
+longan_1mw_rxma0p2703_s42,0.2703,42,838
+longan_1mw_rxma0p2703_s43,0.2703,43,841
+longan_2mw_rxma0p5405_s43,0.5405,43,841
+longan_p5mw_rxma0p1351_s43,0.1351,43,843
+longan_p5mw_rxma0p1351_s42,0.1351,42,843
+longan_2mw_rxma0p5405_s42,0.5405,42,845
+ctl_rxma2_s44,2,44,571
+longan_2mw_rxma0p5405_s44,0.5405,44,574
+longan_1mw_rxma0p2703_s44,0.2703,44,578
+longan_p5mw_rxma0p1351_s44,0.1351,44,580
